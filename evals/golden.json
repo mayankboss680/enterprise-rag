@@ -1,0 +1,37 @@
+[
+    {
+        "doc": "BookAStay-Proposal-Final-2200.pdf",
+        "question": "What role does RateHawk play in BookAStay?",
+        "answer": "RateHawk is the hotel-inventory wholesaler accessed via API (over 2.5M properties); separately, a RateHawk credit line or deposit handles payments, adjusted later with AI and WhatsApp usage.",
+        "pages": [
+            5,
+            22
+        ]
+    },
+    {
+        "doc": "BookAStay-Proposal-Final.pdf",
+        "question": "What are the phases of the BookAStay rollout?",
+        "answer": "Phase 1 launches the website, Phase 2 adds the mobile app and AI features, Phase 3 introduces HOTELROOMS for travel agents.",
+        "pages": [
+            4,
+            7
+        ]
+    },
+    {
+        "doc": "15992.pdf",
+        "question": "how does the urinary system handle urea?",
+        "answer": "Kidneys remove urea from the blood; vasopressin (ADH) influences how much urea is re-absorbed in the collecting ducts.",
+        "pages": [
+            94
+        ]
+    },
+    {
+        "doc": "15992.pdf",
+        "question": "Why is the skeletal system important?",
+        "answer": "It protects vital organs, gives structural framework, and acts as a mineral bank storing about 99% of the body's calcium.",
+        "pages": [
+            150,
+            151
+        ]
+    }
+]

@@ -1,0 +1,5 @@
+PyMuPDF
+tiktoken
+sentence-transformers
+python-dotenv
+supabase

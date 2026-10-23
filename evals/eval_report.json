@@ -1,0 +1,79 @@
+{
+  "summary": {
+    "context_precision": 0.21,
+    "context_recall": 0.88,
+    "faithfulness": 0.75,
+    "answer_correctness": 0.75
+  },
+  "rows": [
+    {
+      "question": "What role does RateHawk play in BookAStay?",
+      "precision": 0.12,
+      "recall": 0.5,
+      "faithful": true,
+      "correct": true,
+      "got_pages": [
+        1,
+        5,
+        6,
+        14,
+        16,
+        17,
+        20,
+        21
+      ],
+      "answer": "RateHawk is the wholesaler that supplies BookAStay with hotel inventory and pricing. It offers more than 2.5\u202fmillion properties from over 200 suppliers, provides live rates and booking through an API, and supplies a monthly credit\u2011line invoice that BookAStay pays in foreign currency. BookAStay shows RateHawk\u2019s hotels, adds its own margin, and sells the rooms to customers while relying on RateHawk for availability checks, price confirmation, and final booking confirmation. [1] [3]"
+    },
+    {
+      "question": "What are the phases of the BookAStay rollout?",
+      "precision": 0.25,
+      "recall": 1.0,
+      "faithful": false,
+      "correct": true,
+      "got_pages": [
+        4,
+        5,
+        6,
+        7,
+        9,
+        17,
+        20,
+        22
+      ],
+      "answer": "The BookAStay rollout is organized into three phases:\n\n1. **Launch** \u2013 the initial website with search, hotel pages, payment, confirmed booking, automatic emails, alerts, an admin dashboard, and a WhatsApp help button.  \n2. **Growth** \u2013 the mobile app (Android first, iPhone later), AI concierge, Refer\u2011and\u2011Earn, Deal of the Week, and daily AI summary.  \n3. **Separate Project Expansion** \u2013 the HOTELROOMS project for travel agents, including our own hotel contracts, agent onboarding, and ongoing monthly support.  \n\nThese phases are described in the plan on page\u202f7 of the document."
+    },
+    {
+      "question": "how does the urinary system handle urea?",
+      "precision": 0.14,
+      "recall": 1.0,
+      "faithful": true,
+      "correct": true,
+      "got_pages": [
+        92,
+        94,
+        95,
+        106,
+        137,
+        138,
+        149
+      ],
+      "answer": "The urinary system removes urea from the blood and its handling is regulated by the kidney\u2019s concentrating mechanism and by hormonal control.\n\n* **Excretion** \u2013 Urea is produced in the liver and is carried to the kidneys in the blood. The kidneys filter urea and it is normally excreted in the urine. The rate of loss of urea through the kidney is influenced by the activity of the hormone vasopressin on the collecting ducts, which controls how much water is reabsorbed and therefore how concentrated the urine becomes [1, p.\u202f94].\n\n* **Re\u2011absorption** \u2013 In low\u2011protein diets, urea can be re\u2011absorbed"
+    },
+    {
+      "question": "Why is the skeletal system important?",
+      "precision": 0.33,
+      "recall": 1.0,
+      "faithful": true,
+      "correct": false,
+      "got_pages": [
+        86,
+        150,
+        151,
+        156,
+        158,
+        160
+      ],
+      "answer": "I couldn't generate an answer."
+    }
+  ]
+}
