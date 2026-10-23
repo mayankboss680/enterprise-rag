@@ -40,7 +40,14 @@ function rrfFuse(lists: string[][], k = 60): Map<string, number> {
 
 export async function POST(req: NextRequest) {
     try {
-        const { message, docId, debug } = await req.json();
+        const body = (await req.json()) as {
+            message?: string;
+            docId?: string | null;
+            debug?: boolean;
+        };
+        const message = body.message;
+        const docId = body.docId;
+        const debug = body.debug;
         if (!message?.trim()) return NextResponse.json({ error: "Empty query" }, { status: 400 });
 
         // Resolve optional document scope -> metadata pre-filter
