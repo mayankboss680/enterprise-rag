@@ -1,3 +1,5 @@
+export const maxDuration = 60; // allow cold starts up to 60s on serverless
+
 import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
 import { createClient } from "@supabase/supabase-js";
@@ -63,14 +65,20 @@ export async function POST(req: NextRequest) {
         const metaFilter = scopeSource ? { source: scopeSource } : {};
 
         // 1) DENSE: semantic candidates (scoped)
-        const queryEmb = await embedQuery(message);
-        const { data: dense, error: e1 } = await supabase.rpc("match_documents", {
-            query_embedding: queryEmb,
-            match_count: VECTOR_CANDIDATES,
-            filter: metaFilter,
-        });
-        if (e1) throw e1;
-        const denseRows = (dense ?? []).map((r: any) => ({ ...r, similarity: r.similarity ?? 0 }));
+        ;    // 1) DENSE: semantic candidates (best-effort; serverless may lack native ONNX)
+        let denseRows: any[] = [];
+        try {
+            const queryEmb = await embedQuery(message);
+            const { data: dense, error: e1 } = await supabase.rpc("match_documents", {
+                query_embedding: queryEmb,
+                match_count: VECTOR_CANDIDATES,
+                filter: metaFilter,
+            });
+            if (e1) throw e1;
+            denseRows = (dense ?? []).map((r: any) => ({ ...r, similarity: r.similarity ?? 0 }));
+        } catch (embedError) {
+            console.warn("Dense path unavailable - falling back to lexical-only:", embedError);
+        }
 
         // 2) LEXICAL: per-token, typo-tolerant trigram candidates (scoped)
         const tokens = [...new Set(
