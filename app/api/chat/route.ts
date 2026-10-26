@@ -3,7 +3,7 @@ export const maxDuration = 60; // allow cold starts up to 60s on serverless
 import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
 import { createClient } from "@supabase/supabase-js";
-import { pipeline } from "@xenova/transformers";
+
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY! });
 
@@ -19,10 +19,12 @@ const FINAL_CONTEXT = 8;
 
 let embedder: any = null;
 async function getEmbedder() {
-    if (!embedder) embedder = await pipeline("feature-extraction", "Xenova/all-mpnet-base-v2");
+    if (!embedder) {
+        const { pipeline } = await import("@xenova/transformers");
+        embedder = await pipeline("feature-extraction", "Xenova/all-mpnet-base-v2");
+    }
     return embedder;
 }
-
 async function embedQuery(q: string): Promise<number[]> {
     const embed = await getEmbedder();
     const out = await embed(q, { pooling: "mean", normalize: true });
@@ -64,8 +66,8 @@ export async function POST(req: NextRequest) {
         }
         const metaFilter = scopeSource ? { source: scopeSource } : {};
 
-        // 1) DENSE: semantic candidates (scoped)
-        ;    // 1) DENSE: semantic candidates (best-effort; serverless may lack native ONNX)
+
+        ;
         let denseRows: any[] = [];
         try {
             const queryEmb = await embedQuery(message);
@@ -86,12 +88,11 @@ export async function POST(req: NextRequest) {
         )].slice(0, 4);
 
         const lexMap = new Map<string, any>();
-        for (const token of tokens) {
-            const { data: lex, error: e2 } = await supabase.rpc("lexical_match", {
-                query_token: token,
-                match_count: 10,
-                source_filter: scopeSource,
-            });
+        const results = await Promise.all(tokens.map(token =>
+            supabase.rpc("lexical_match", { query_token: token, match_count: 10, source_filter: scopeSource })
+        ));
+        for (let i = 0; i < tokens.length; i++) {
+            const { data: lex, error: e2 } = results[i];
             if (e2) throw e2;
             for (const r of lex ?? []) {
                 const prev = lexMap.get(r.id);
