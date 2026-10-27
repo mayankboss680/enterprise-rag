@@ -26,9 +26,18 @@ async function getEmbedder() {
     return embedder;
 }
 async function embedQuery(q: string): Promise<number[]> {
-    const embed = await getEmbedder();
-    const out = await embed(q, { pooling: "mean", normalize: true });
-    return Array.from(out.data) as number[];
+    const url = process.env.EMBEDDER_URL;
+    if (!url) throw new Error("EMBEDDER_URL not set in cloud");
+
+    const res = await fetch(`${url}/embed`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: q }),
+    });
+
+    if (!res.ok) throw new Error("Embedder failed");
+    const { embedding } = await res.json();
+    return embedding;
 }
 
 // Reciprocal Rank Fusion: merge rankings by POSITION, not by raw score
